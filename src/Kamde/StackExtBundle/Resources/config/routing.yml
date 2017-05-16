@@ -1,0 +1,3 @@
+kamde_stack_ext_homepage:
+    path:     /
+    defaults: { _controller: KamdeStackExtBundle:Default:index }
