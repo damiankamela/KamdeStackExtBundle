@@ -23,7 +23,7 @@ vagrantfile:
                         id: stackext
                         hostname: stackext.dev
                         network:
-                            private_network: 192.168.56.101
+                            private_network: 192.168.56.102
                             forwarded_port:
                                 vflmnfp_nvurt8wgasx0:
                                     host: '7774'
