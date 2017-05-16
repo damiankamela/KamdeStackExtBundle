@@ -293,6 +293,9 @@ php:
             - intl
             - xml
             - mbstring
+            - curl
+            - zip
+            - unzip
         pear: {  }
         pecl: {  }
     ini:
