@@ -1,6 +1,6 @@
 <?php
 
-namespace Kamde\StackoBundle\Service\ApiClient;
+namespace Kamde\StackExtBundle\Service\ApiClient;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;

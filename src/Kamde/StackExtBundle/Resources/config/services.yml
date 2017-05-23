@@ -4,22 +4,22 @@ parameters:
 
 services:
     kamde_stack_ext.client_factory:
-        class: Kamde\StackoBundle\Service\ApiClient\ClientFactory
+        class: Kamde\StackExtBundle\Service\ApiClient\ClientFactory
 
     kamde_stack_ext.stack_client:
         class: GuzzleHttp\Client
-        factory: kamde_stack_ext.client_factory
+        factory: 'kamde_stack_ext.client_factory:create'
         arguments:
             - []
             -
               base_uri: '%api_url%/%api_version%'
               headers:
-                  User-Agent: 'Kamde StackoBundle 0.1'
+                  User-Agent: 'Kamde StackExtBundle 0.1'
                   Accept: 'application/json'
                   content-type: 'application/json'
-          - "@monolog.logger"
+            - ~
 
     kamde_stack_ext.connector:
-        class: Kamde\StackoBundle\Service\ApiClient\Connector
+        class: Kamde\StackExtBundle\Service\ApiClient\Connector
         arguments:
             - "@kamde_stack_ext.stack_client"
