@@ -1,3 +1,7 @@
 kamde_stack_ext_homepage:
     path:     /
     defaults: { _controller: KamdeStackExtBundle:Default:index }
+
+kamde_stack_ext_test:
+    path:     /test
+    defaults: { _controller: KamdeStackExtBundle:Test:test }
