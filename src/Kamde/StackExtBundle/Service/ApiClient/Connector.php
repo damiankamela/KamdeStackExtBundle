@@ -6,7 +6,7 @@ use GuzzleHttp\ClientInterface;
 
 class Connector
 {
-    /** @var ClientInterface */
+    /** @var ClientInterface|\GuzzleHttp\Client */
     protected $client;
 
     /**
@@ -19,10 +19,11 @@ class Connector
 
     public function test()
     {
-        $response = $this->client->request('GET', '/users/5/top-tags');
+        $response = $this->getResponse('GET', 'users/5/top-tags', [
+            'site' => 'stackoverflow'
+        ]);
 
-        dump(\GuzzleHttp\json_encode($response->getBody(), true));
-        die;
+        return $response;
     }
 
     /**
@@ -33,6 +34,7 @@ class Connector
     protected function normalizeUrl(string $url, array $parameters = [])
     {
         $normalizedUrl = $url;
+
         if (!empty($parameters)) {
             $normalizedUrl .= (false !== strpos($url, '?') ? '&' : '?') . http_build_query($parameters, '', '&');
         }
@@ -48,6 +50,11 @@ class Connector
      */
     protected function getResponse(string $method, string $uri, array $options = [])
     {
+        if ('GET' === strtoupper($method)) {
+            $uri = $this->normalizeUrl($uri, $options);
+            $options = [];
+        }
+
         $response = $this->client->request($method, $uri, $options);
 
         return \GuzzleHttp\json_decode($response->getBody(), true);
