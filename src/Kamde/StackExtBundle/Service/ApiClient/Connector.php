@@ -59,7 +59,7 @@ class Connector
     /**
      * @return string
      */
-    public function getSite(): string
+    public function getSite()
     {
         return $this->site;
     }

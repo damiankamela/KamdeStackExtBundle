@@ -56,7 +56,7 @@ abstract class AbstractResource
     /**
      * @return Connector
      */
-    public function getConnector(): Connector
+    public function getConnector()
     {
         return $this->connector;
     }
@@ -64,7 +64,7 @@ abstract class AbstractResource
     /**
      * @return string
      */
-    public function generateUri(): string
+    protected function generateUri()
     {
         return $this->decamelize($this->getResourceName(), '-') . '/' . $this->getId() . '/';
     }
@@ -72,7 +72,7 @@ abstract class AbstractResource
     /**
      * @return string
      */
-    protected function getResourceName(): string
+    protected function getResourceName()
     {
         return str_replace('Resource', '', $this->getShortClassName()) . 's';
     }
@@ -81,7 +81,7 @@ abstract class AbstractResource
      * @param int $id
      * @return self
      */
-    public function setId(int $id): self
+    public function setId(int $id)
     {
         $this->id = $id;
 
@@ -91,7 +91,7 @@ abstract class AbstractResource
     /**
      * @return int|null
      */
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
