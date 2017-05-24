@@ -26,21 +26,35 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
         $this->clientMock->expects(self::any())->method('request')->willReturn($this->responseMock);
 
         $this->connector = new Connector($this->clientMock);
+        $this->connector->setSite('MySite.com');
     }
 
     /**
      * @test
-     * @dataProvider provideData
-     * @param $uri
-     * @param $input
-     * @param $output
      */
-    public function should_send_valid_get_request($uri, $input, $output)
+    public function should_send_valid_get_request()
     {
         $method = 'GET';
+        $uri = 'test.org';
 
-        $this->clientMock->expects(self::once())->method('request')->with($method, $uri . '?foo=1&bar=baz');
-        $this->responseMock->expects(self::once())->method('getBody')->willReturn(json_encode($output));
+        $input = [
+            'foo' => 1,
+            'bar' => 'baz'
+        ];
+
+        $output = [
+            'baz' => 'zoz'
+        ];
+
+        $this->clientMock
+            ->expects(self::once())
+            ->method('request')
+            ->with($method, $uri . '?foo=1&bar=baz&site=MySite.com', []);
+
+        $this->responseMock
+            ->expects(self::once())
+            ->method('getBody')
+            ->willReturn(json_encode($output));
 
         $response = $this->connector->getResponse($method, $uri, $input);
 
@@ -49,31 +63,43 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @dataProvider provideData
-     * @param $uri
-     * @param $input
-     * @param $output
+     * @dataProvider provideMethod
+     * @param string $method
      */
-    public function should_send_valid_post_request($uri, $input, $output)
+    public function should_send_valid_post_request(string $method)
     {
-        $method = 'POST';
+        $uri = 'test.org';
 
-        $this->clientMock->expects(self::once())->method('request')->with($method, $uri, $input);
-        $this->responseMock->expects(self::once())->method('getBody')->willReturn(json_encode($output));
+        $input = [
+            'foo' => 1,
+            'bar' => 'baz'
+        ];
+
+        $output = [
+            'baz' => 'zoz'
+        ];
+
+        $this->clientMock
+            ->expects(self::once())
+            ->method('request')
+            ->with($method, $uri, array_merge($input, ['site' => 'MySite.com']));
+
+        $this->responseMock
+            ->expects(self::once())
+            ->method('getBody')
+            ->willReturn(json_encode($output));
 
         $response = $this->connector->getResponse($method, $uri, $input);
 
         $this->assertEquals($output, $response);
     }
 
-    public function provideData()
+    public function provideMethod()
     {
         return [
-            [
-                ['my_url'],
-                ['foo' => 1, 'bar' => 'baz'],
-                ['baz' => 'zoz']
-            ]
+            ['POST'],
+            ['PATCH'],
+            ['DELETE']
         ];
     }
 }
