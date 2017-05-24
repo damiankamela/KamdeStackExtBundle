@@ -9,6 +9,9 @@ class Connector
     /** @var ClientInterface|\GuzzleHttp\Client */
     protected $client;
 
+    /** @var string */
+    protected $site = '';
+
     /**
      * @param ClientInterface $client
      */
@@ -25,6 +28,8 @@ class Connector
      */
     public function getResponse(string $method, string $uri, array $options = [])
     {
+        $options['site'] = $this->getSite();
+
         if ('GET' === strtoupper($method)) {
             $uri = $this->normalizeUrl($uri, $options);
             $options = [];
@@ -49,5 +54,24 @@ class Connector
         }
 
         return $normalizedUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSite(): string
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param string $site
+     * @return $this
+     */
+    public function setSite(string $site)
+    {
+        $this->site = $site;
+
+        return $this;
     }
 }

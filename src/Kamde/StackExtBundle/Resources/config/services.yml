@@ -19,7 +19,9 @@ services:
                   content-type: 'application/json'
             - ~
 
-    kamde_stack_ext.connector:
+    kamde_stack_ext.connector.stackoverflow:
         class: Kamde\StackExtBundle\Service\ApiClient\Connector
         arguments:
             - "@kamde_stack_ext.stack_client"
+        calls:
+            - [setSite, ['stackoverflow']]
