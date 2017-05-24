@@ -30,15 +30,50 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider provideData
+     * @param $uri
+     * @param $input
+     * @param $output
      */
-    public function shouldSomething()
+    public function should_send_valid_get_request($uri, $input, $output)
     {
-        $json = json_encode(['foo' => 'bar']);
+        $method = 'GET';
 
-        $this->responseMock->expects(self::once())->method('getBody')->willReturn($json);
+        $this->clientMock->expects(self::once())->method('request')->with($method, $uri . '?foo=1&bar=baz');
+        $this->responseMock->expects(self::once())->method('getBody')->willReturn(json_encode($output));
 
-        $response = $this->connector->test();
+        $response = $this->connector->getResponse($method, $uri, $input);
 
-        $this->assertEquals(['foo' => 'bar'], $response);
+        $this->assertEquals($output, $response);
+    }
+
+    /**
+     * @test
+     * @dataProvider provideData
+     * @param $uri
+     * @param $input
+     * @param $output
+     */
+    public function should_send_valid_post_request($uri, $input, $output)
+    {
+        $method = 'POST';
+
+        $this->clientMock->expects(self::once())->method('request')->with($method, $uri, $input);
+        $this->responseMock->expects(self::once())->method('getBody')->willReturn(json_encode($output));
+
+        $response = $this->connector->getResponse($method, $uri, $input);
+
+        $this->assertEquals($output, $response);
+    }
+
+    public function provideData()
+    {
+        return [
+            [
+                ['my_url'],
+                ['foo' => 1, 'bar' => 'baz'],
+                ['baz' => 'zoz']
+            ]
+        ];
     }
 }

@@ -17,13 +17,22 @@ class Connector
         $this->client = $client;
     }
 
-    public function test()
+    /**
+     * @param string $method
+     * @param string $uri
+     * @param array  $options
+     * @return mixed
+     */
+    public function getResponse(string $method, string $uri, array $options = [])
     {
-        $response = $this->getResponse('GET', 'users/5/top-tags', [
-            'site' => 'stackoverflow'
-        ]);
+        if ('GET' === strtoupper($method)) {
+            $uri = $this->normalizeUrl($uri, $options);
+            $options = [];
+        }
 
-        return $response;
+        $response = $this->client->request($method, $uri, $options);
+
+        return \GuzzleHttp\json_decode($response->getBody(), true);
     }
 
     /**
@@ -41,23 +50,4 @@ class Connector
 
         return $normalizedUrl;
     }
-
-    /**
-     * @param string $method
-     * @param string $uri
-     * @param array  $options
-     * @return mixed
-     */
-    protected function getResponse(string $method, string $uri, array $options = [])
-    {
-        if ('GET' === strtoupper($method)) {
-            $uri = $this->normalizeUrl($uri, $options);
-            $options = [];
-        }
-
-        $response = $this->client->request($method, $uri, $options);
-
-        return \GuzzleHttp\json_decode($response->getBody(), true);
-    }
-
 }
