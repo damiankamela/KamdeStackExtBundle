@@ -43,7 +43,12 @@ abstract class AbstractResource
             throw new MethodNotFoundException(sprintf('Method "%s not found in "%s" class.', $name, get_called_class()));
         }
 
-        $resourceName = $this->decamelize(str_replace('get', '', $name), '-');
+        if('getData' === $name) {
+            $resourceName = '';
+        } else {
+            $resourceName = $this->decamelize(str_replace('get', '', $name), '-');
+        }
+
         $uri = $this->generateUri() . $resourceName;
 
         try {

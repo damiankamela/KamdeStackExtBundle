@@ -62,7 +62,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function should_retrieve_resource_data()
+    public function should_retrieve_resource_quota()
     {
         $this->resource->setId(1);
 
@@ -73,6 +73,24 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
             ->willReturn(['foo' => 'bar']);
 
         $response = $this->resource->getFooBar();
+
+        $this->assertEquals(['foo' => 'bar'], $response);
+    }
+
+    /**
+     * @test
+     */
+    public function should_retrieve_resource_data()
+    {
+        $this->resource->setId(1);
+
+        $this->connectorMock
+            ->expects(self::once())
+            ->method('getResponse')
+            ->with('GET', 's/1/')
+            ->willReturn(['foo' => 'bar']);
+
+        $response = $this->resource->getData();
 
         $this->assertEquals(['foo' => 'bar'], $response);
     }
