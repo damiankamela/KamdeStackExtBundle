@@ -29,7 +29,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
      */
     public function not_set_id_should_throw_error()
     {
-        $this->resource->getTest();
+        $this->resource->getSomething();
     }
 
     /**
@@ -40,7 +40,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
     {
         $this->resource->setId(1);
 
-        $this->resource->test();
+        $this->resource->foo();
     }
 
     /**
@@ -56,7 +56,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
             ->method('getResponse')
             ->willThrowException(new RequestException('foo', new Request('GET', 'foo')));
 
-        $this->resource->getTest();
+        $this->resource->getSomething();
     }
 
     /**
