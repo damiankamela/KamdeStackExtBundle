@@ -11,7 +11,7 @@ class TestController extends Controller
         $resourceFactory = $this->get('kamde_stack_ext.resource_factory');
         $resource = $resourceFactory->createUserResource(5929417);
 
-        dump($resource->getData());
+        dump($resource->getComments());
         die;
     }
 
