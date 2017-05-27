@@ -8,6 +8,9 @@ use Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException;
 use Kamde\StackExtBundle\Service\ApiClient\Exception\ResourceNotSetException;
 use Kamde\StackExtBundle\Traits\ClassNameResolverTrait;
 
+/**
+ * @method array getData()
+ */
 abstract class AbstractResource implements ResourceInterface
 {
     use ClassNameResolverTrait;
