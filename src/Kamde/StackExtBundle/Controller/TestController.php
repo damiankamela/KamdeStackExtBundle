@@ -8,11 +8,10 @@ class TestController extends Controller
 {
     public function testAction()
     {
-        $connector = $this->get('kamde_stack_ext.connector');
+        $resourceFactory = $this->get('kamde_stack_ext.resource_factory');
+        $resource = $resourceFactory->createUserResource(5929417);
 
-        $connector->test();
-
-        dump("Test");
+        dump($resource->getData());
         die;
     }
 

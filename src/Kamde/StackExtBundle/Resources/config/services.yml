@@ -22,6 +22,11 @@ services:
     kamde_stack_ext.connector.stackoverflow:
         class: Kamde\StackExtBundle\Service\ApiClient\Connector
         arguments:
-            - "@kamde_stack_ext.stack_client"
+            - '@kamde_stack_ext.stack_client'
         calls:
             - [setSite, ['stackoverflow']]
+            
+    kamde_stack_ext.resource_factory:
+        class: Kamde\StackExtBundle\Service\ApiClient\Resource\ResourceFactory
+        arguments:
+            - '@kamde_stack_ext.connector.stackoverflow'
