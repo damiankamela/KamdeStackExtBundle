@@ -1,15 +1,16 @@
 <?php
 
-namespace Kamde\StackExtBundle\Service\ApiClient\Resource;
+namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Resource;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use Kamde\StackExtBundle\Service\ApiClient\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\Resource\AbstractResource;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class AbstractResourceTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var AbstractResource */
+    /** @var AbstractResource|mixed */
     protected $resource;
 
     /** @var Connector|Mock */

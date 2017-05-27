@@ -8,7 +8,7 @@ use Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException;
 use Kamde\StackExtBundle\Service\ApiClient\Exception\ResourceNotSetException;
 use Kamde\StackExtBundle\Traits\ClassNameResolverTrait;
 
-abstract class AbstractResource
+abstract class AbstractResource implements ResourceInterface
 {
     use ClassNameResolverTrait;
 
@@ -24,6 +24,20 @@ abstract class AbstractResource
     public function __construct(Connector $connector)
     {
         $this->connector = $connector;
+    }
+
+    public function __invoke($id)
+    {
+        $this->id = $id;
+
+        $uri = $this->generateUri();
+
+        try {
+            return $this->connector->getResponse('GET', $uri);
+        } catch (RequestException $exception) {
+            dump("foo");
+            die;
+        }
     }
 
     /**
@@ -67,22 +81,6 @@ abstract class AbstractResource
     }
 
     /**
-     * @return string
-     */
-    protected function generateUri()
-    {
-        return $this->decamelize($this->getResourceName(), '-') . '/' . $this->getId() . '/';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getResourceName()
-    {
-        return str_replace('Resource', '', $this->getShortClassName()) . 's';
-    }
-
-    /**
      * @param int $id
      * @return self
      */
@@ -101,4 +99,19 @@ abstract class AbstractResource
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
+    protected function generateUri()
+    {
+        return $this->decamelize($this->getResourceName(), '-') . '/' . $this->getId() . '/';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getResourceName()
+    {
+        return str_replace('Resource', '', $this->getShortClassName()) . 's';
+    }
 }
