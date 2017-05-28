@@ -20,7 +20,7 @@ services:
             - ~
 
     kamde_stack_ext.connector.stackoverflow:
-        class: Kamde\StackExtBundle\Service\ApiClient\Connector\Connector
+        class: Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector
         arguments:
             - '@kamde_stack_ext.stack_client'
             - 'stackoverflow'
