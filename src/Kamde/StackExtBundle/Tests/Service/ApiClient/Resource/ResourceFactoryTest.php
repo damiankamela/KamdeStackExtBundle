@@ -33,7 +33,7 @@ class ResourceFactoryTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \Kamde\StackExtBundle\Service\ApiClient\Exception\ResourceNotFoundException
      */
-    public function try_create_unknown_resource()
+    public function trying_create_unknown_resource()
     {
         $this->factory->createFooResource(1);
     }
@@ -42,7 +42,7 @@ class ResourceFactoryTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException
      */
-    public function try_call_undefined_method()
+    public function trying_call_undefined_method()
     {
         $this->factory->doFooResource(1);
     }
