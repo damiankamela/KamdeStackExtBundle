@@ -2,7 +2,7 @@
 
 namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Resource;
 
-use Kamde\StackExtBundle\Service\ApiClient\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\Connector;
 use Kamde\StackExtBundle\Service\ApiClient\Resource\ResourceFactory;
 use Kamde\StackExtBundle\Service\ApiClient\Resource\UserResource;
 use \PHPUnit_Framework_MockObject_MockObject as Mock;

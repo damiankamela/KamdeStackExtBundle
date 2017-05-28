@@ -1,9 +1,10 @@
 <?php
 
-namespace Kamde\StackExtBundle\Tests\Service\ApiClient;
+namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Connector;
 
 use GuzzleHttp\ClientInterface;
-use Kamde\StackExtBundle\Service\ApiClient\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 use Psr\Http\Message\MessageInterface;
 
@@ -25,14 +26,13 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
 
         $this->clientMock->expects(self::any())->method('request')->willReturn($this->responseMock);
 
-        $this->connector = new Connector($this->clientMock);
-        $this->connector->setSite('MySite.com');
+        $this->connector = new Connector($this->clientMock, 'MySite.com');
     }
 
     /**
      * @test
      */
-    public function should_send_valid_get_request()
+    public function send_get_request()
     {
         $method = 'GET';
         $uri = 'test.org';
@@ -43,7 +43,12 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
         ];
 
         $output = [
-            'baz' => 'zoz'
+            'quotaMax'       => 100,
+            'quotaRemaining' => 99,
+            'hasMore'        => false,
+            'items'          => [
+                ['baz' => 'zoz']
+            ],
         ];
 
         $this->clientMock
@@ -58,7 +63,11 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->connector->getResponse($method, $uri, $input);
 
-        $this->assertEquals($output, $response);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals([['baz' => 'zoz']], $response->getItems());
+        $this->assertEquals(100, $response->getQuotaMax());
+        $this->assertEquals(99, $response->getQuotaRemaining());
+        $this->assertfalse($response->hasMore());
     }
 
     /**
@@ -66,7 +75,7 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
      * @dataProvider provideMethod
      * @param string $method
      */
-    public function should_send_valid_post_request(string $method)
+    public function send_other_request(string $method)
     {
         $uri = 'test.org';
 
@@ -76,7 +85,12 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
         ];
 
         $output = [
-            'baz' => 'zoz'
+            'quotaMax'       => 100,
+            'quotaRemaining' => 99,
+            'hasMore'        => false,
+            'items'          => [
+                ['baz' => 'zoz']
+            ],
         ];
 
         $this->clientMock
@@ -91,7 +105,11 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->connector->getResponse($method, $uri, $input);
 
-        $this->assertEquals($output, $response);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals([['baz' => 'zoz']], $response->getItems());
+        $this->assertEquals(100, $response->getQuotaMax());
+        $this->assertEquals(99, $response->getQuotaRemaining());
+        $this->assertfalse($response->hasMore());
     }
 
     public function provideMethod()

@@ -2,7 +2,7 @@
 
 namespace Kamde\StackExtBundle\Service\ApiClient\Resource;
 
-use Kamde\StackExtBundle\Service\ApiClient\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\Connector;
 use Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException;
 use Kamde\StackExtBundle\Service\ApiClient\Exception\ResourceNotFoundException;
 
@@ -31,17 +31,18 @@ class ResourceFactory
      */
     public function __call(string $name, array $arguments)
     {
-        if(false === strpos($name, 'create')) {
+        if (false === strpos($name, 'create')) {
             throw new MethodNotFoundException(sprintf('Method "%s not found in "%s" class.', $name, get_called_class()));
         }
 
-        $resourceClass = __NAMESPACE__ .'\\'. str_replace('create', '', $name);
+        $resourceClass = __NAMESPACE__ . '\\' . str_replace('create', '', $name);
 
-        if(!class_exists($resourceClass)) {
+        if (!class_exists($resourceClass)) {
             throw new ResourceNotFoundException($resourceClass);
         }
 
         $resourceId = $arguments[0];
+
         return $this->createResource($resourceClass, $resourceId);
     }
 
@@ -52,8 +53,7 @@ class ResourceFactory
      */
     protected function createResource(string $resourceClass, int $id)
     {
-        $resource = new $resourceClass($this->connector);
-        $resource->setId($id);
+        $resource = new $resourceClass($this->connector, $id);
 
         return $resource;
     }

@@ -1,16 +1,16 @@
 <?php
 
-namespace Kamde\StackExtBundle\Service\ApiClient;
+namespace Kamde\StackExtBundle\Service\ApiClient\Connector;
 
 use GuzzleHttp\ClientInterface;
+use Kamde\StackExtBundle\Service\ApiClient\Response;
+use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
+use Psr\Http\Message\MessageInterface;
 
-class Connector
+abstract class AbstractConnector
 {
     /** @var ClientInterface|\GuzzleHttp\Client */
     protected $client;
-
-    /** @var string */
-    protected $site = '';
 
     /**
      * @param ClientInterface $client
@@ -24,12 +24,10 @@ class Connector
      * @param string $method
      * @param string $uri
      * @param array  $options
-     * @return mixed
+     * @return ResponseInterface
      */
     public function getResponse(string $method, string $uri, array $options = [])
     {
-        $options['site'] = $this->getSite();
-
         if ('GET' === strtoupper($method)) {
             $uri = $this->normalizeUrl($uri, $options);
             $options = [];
@@ -37,7 +35,7 @@ class Connector
 
         $response = $this->client->request($method, $uri, $options);
 
-        return \GuzzleHttp\json_decode($response->getBody(), true);
+        return $this->buildResponse($response);
     }
 
     /**
@@ -57,21 +55,13 @@ class Connector
     }
 
     /**
-     * @return string
+     * @param MessageInterface $response
+     * @return Response
      */
-    public function getSite()
+    protected function buildResponse(MessageInterface $response)
     {
-        return $this->site;
-    }
+        $body = \GuzzleHttp\json_decode($response->getBody(), true);
 
-    /**
-     * @param string $site
-     * @return $this
-     */
-    public function setSite(string $site)
-    {
-        $this->site = $site;
-
-        return $this;
+        return new Response($body);
     }
 }

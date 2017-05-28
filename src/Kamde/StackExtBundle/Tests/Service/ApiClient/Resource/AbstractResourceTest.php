@@ -4,8 +4,9 @@ namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Resource;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
-use Kamde\StackExtBundle\Service\ApiClient\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\Connector;
 use Kamde\StackExtBundle\Service\ApiClient\Resource\AbstractResource;
+use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class AbstractResourceTest extends \PHPUnit_Framework_TestCase
@@ -18,19 +19,15 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->connectorMock = $this->getMockBuilder(Connector::class)->disableOriginalConstructor()->getMock();
+        $this->connectorMock = $this
+            ->getMockBuilder(Connector::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->resource = $this->getMockBuilder(AbstractResource::class)
-            ->setConstructorArgs([$this->connectorMock])->getMockForAbstractClass();
-    }
-
-    /**
-     * @test
-     * @expectedException \Kamde\StackExtBundle\Service\ApiClient\Exception\ResourceNotSetException
-     */
-    public function not_set_id_should_throw_error()
-    {
-        $this->resource->getSomething();
+        $this->resource = $this
+            ->getMockBuilder(AbstractResource::class)
+            ->setConstructorArgs([$this->connectorMock, 1])
+            ->getMockForAbstractClass();
     }
 
     /**
@@ -39,8 +36,6 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
      */
     public function calling_invalid_method_should_throw_error()
     {
-        $this->resource->setId(1);
-
         $this->resource->foo();
     }
 
@@ -50,8 +45,6 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
      */
     public function calling_unavailable_resource_should_throw_error()
     {
-        $this->resource->setId(1);
-
         $this->connectorMock
             ->expects(self::once())
             ->method('getResponse')
@@ -65,17 +58,15 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
      */
     public function should_retrieve_resource_quota()
     {
-        $this->resource->setId(1);
-
         $this->connectorMock
             ->expects(self::once())
             ->method('getResponse')
             ->with('GET', 's/1/foo-bar')
-            ->willReturn(['foo' => 'bar']);
+            ->willReturn(['foo']);
 
         $response = $this->resource->getFooBar();
 
-        $this->assertEquals(['foo' => 'bar'], $response);
+        $this->assertEquals(['foo'], $response);
     }
 
     /**
@@ -83,16 +74,14 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
      */
     public function should_retrieve_resource_data()
     {
-        $this->resource->setId(1);
-
         $this->connectorMock
             ->expects(self::once())
             ->method('getResponse')
             ->with('GET', 's/1/')
-            ->willReturn(['foo' => 'bar']);
+            ->willReturn(['foo']);
 
         $response = $this->resource->getData();
 
-        $this->assertEquals(['foo' => 'bar'], $response);
+        $this->assertEquals(['foo'], $response);
     }
 }
