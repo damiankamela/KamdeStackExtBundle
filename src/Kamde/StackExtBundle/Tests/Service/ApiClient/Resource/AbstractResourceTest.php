@@ -3,8 +3,9 @@
 namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Resource;
 
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use Kamde\StackExtBundle\Service\ApiClient\Connector\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\Request;
 use Kamde\StackExtBundle\Service\ApiClient\Resource\AbstractResource;
 use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
@@ -48,7 +49,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
         $this->connectorMock
             ->expects(self::once())
             ->method('getResponse')
-            ->willThrowException(new RequestException('foo', new Request('GET', 'foo')));
+            ->willThrowException(new RequestException('foo', new GuzzleRequest('GET', 'foo')));
 
         $this->resource->getSomething();
     }
@@ -61,7 +62,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
         $this->connectorMock
             ->expects(self::once())
             ->method('getResponse')
-            ->with('GET', 's/1/foo-bar')
+            ->with(new Request('GET', 's/1/foo-bar'))
             ->willReturn(['foo']);
 
         $response = $this->resource->getFooBar();
@@ -77,7 +78,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
         $this->connectorMock
             ->expects(self::once())
             ->method('getResponse')
-            ->with('GET', 's/1/')
+            ->with(new Request('GET', 's/1/'))
             ->willReturn(['foo']);
 
         $response = $this->resource->getData();

@@ -3,6 +3,7 @@
 namespace Kamde\StackExtBundle\Service\ApiClient\Connector;
 
 use GuzzleHttp\ClientInterface;
+use Kamde\StackExtBundle\Service\ApiClient\Request;
 use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
 
 class Connector extends AbstractConnector
@@ -22,15 +23,13 @@ class Connector extends AbstractConnector
     }
 
     /**
-     * @param string $method
-     * @param string $uri
-     * @param array  $options
+     * @param Request $request
      * @return ResponseInterface
      */
-    public function getResponse(string $method, string $uri, array $options = [])
+    public function getResponse(Request $request)
     {
-        $options['site'] = $this->site;
+        $request->setParameter('site', $this->site);
 
-        return parent::getResponse($method, $uri, $options);
+        return parent::getResponse($request);
     }
 }

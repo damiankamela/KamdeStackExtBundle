@@ -5,6 +5,7 @@ namespace Kamde\StackExtBundle\Service\ApiClient\Resource;
 use GuzzleHttp\Exception\RequestException;
 use Kamde\StackExtBundle\Service\ApiClient\Connector\Connector;
 use Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException;
+use Kamde\StackExtBundle\Service\ApiClient\Request;
 use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
 use Kamde\StackExtBundle\Traits\ClassNameResolverTrait;
 
@@ -50,9 +51,10 @@ abstract class AbstractResource implements ResourceInterface
         }
 
         $uri = $this->generateUri() . $resourceName;
+        $request = new Request('GET', $uri);
 
         try {
-            return $this->connector->getResponse('GET', $uri);
+            return $this->connector->getResponse($request);
         } catch (RequestException $exception) {
             throw new MethodNotFoundException(sprintf('Method "%s" not found in "%s" class.', $name, get_called_class()));
         }

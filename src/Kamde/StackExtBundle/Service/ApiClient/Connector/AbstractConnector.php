@@ -3,6 +3,7 @@
 namespace Kamde\StackExtBundle\Service\ApiClient\Connector;
 
 use GuzzleHttp\ClientInterface;
+use Kamde\StackExtBundle\Service\ApiClient\Request;
 use Kamde\StackExtBundle\Service\ApiClient\Response;
 use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
 use Psr\Http\Message\MessageInterface;
@@ -21,37 +22,14 @@ abstract class AbstractConnector
     }
 
     /**
-     * @param string $method
-     * @param string $uri
-     * @param array  $options
+     * @param Request $request
      * @return ResponseInterface
      */
-    public function getResponse(string $method, string $uri, array $options = [])
+    public function getResponse(Request $request)
     {
-        if ('GET' === strtoupper($method)) {
-            $uri = $this->normalizeUrl($uri, $options);
-            $options = [];
-        }
-
-        $response = $this->client->request($method, $uri, $options);
+        $response = $this->client->request($request->getMethod(), $request->getUri(), $request->getParameters());
 
         return $this->buildResponse($response);
-    }
-
-    /**
-     * @param       $url
-     * @param array $parameters
-     * @return string
-     */
-    protected function normalizeUrl(string $url, array $parameters = [])
-    {
-        $normalizedUrl = $url;
-
-        if (!empty($parameters)) {
-            $normalizedUrl .= (false !== strpos($url, '?') ? '&' : '?') . http_build_query($parameters, '', '&');
-        }
-
-        return $normalizedUrl;
     }
 
     /**

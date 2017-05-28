@@ -4,6 +4,7 @@ namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Connector;
 
 use GuzzleHttp\ClientInterface;
 use Kamde\StackExtBundle\Service\ApiClient\Connector\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\Request;
 use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 use Psr\Http\Message\MessageInterface;
@@ -61,7 +62,8 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
             ->method('getBody')
             ->willReturn(json_encode($output));
 
-        $response = $this->connector->getResponse($method, $uri, $input);
+        $request = new Request($method, $uri, $input);
+        $response = $this->connector->getResponse($request);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals([['baz' => 'zoz']], $response->getItems());
@@ -103,7 +105,8 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
             ->method('getBody')
             ->willReturn(json_encode($output));
 
-        $response = $this->connector->getResponse($method, $uri, $input);
+        $request = new Request($method, $uri, $input);
+        $response = $this->connector->getResponse($request);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals([['baz' => 'zoz']], $response->getItems());
