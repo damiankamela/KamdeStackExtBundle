@@ -2,7 +2,7 @@
 
 namespace Kamde\StackExtBundle\Service\ApiClient;
 
-interface ResponseInterface
+interface StackResponseInterface
 {
     /**
      * @return array

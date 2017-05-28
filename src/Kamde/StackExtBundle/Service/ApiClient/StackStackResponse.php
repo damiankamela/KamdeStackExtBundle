@@ -2,7 +2,7 @@
 
 namespace Kamde\StackExtBundle\Service\ApiClient;
 
-class Response implements ResponseInterface
+class StackStackResponse implements StackResponseInterface
 {
     /** @var array */
     protected $items;

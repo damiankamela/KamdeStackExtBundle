@@ -2,7 +2,7 @@
 
 namespace Kamde\StackExtBundle\Service\ApiClient\Resource;
 
-use Kamde\StackExtBundle\Service\ApiClient\Connector\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector;
 use Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException;
 use Kamde\StackExtBundle\Service\ApiClient\Exception\ResourceNotFoundException;
 
@@ -11,13 +11,13 @@ use Kamde\StackExtBundle\Service\ApiClient\Exception\ResourceNotFoundException;
  */
 class ResourceFactory
 {
-    /** @var Connector */
+    /** @var StackConnector */
     protected $connector;
 
     /**
-     * @param Connector $connector
+     * @param StackConnector $connector
      */
-    public function __construct(Connector $connector)
+    public function __construct(StackConnector $connector)
     {
         $this->connector = $connector;
     }

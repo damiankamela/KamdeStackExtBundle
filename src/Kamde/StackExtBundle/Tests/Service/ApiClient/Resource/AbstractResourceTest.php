@@ -4,10 +4,10 @@ namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Resource;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
-use Kamde\StackExtBundle\Service\ApiClient\Connector\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector;
 use Kamde\StackExtBundle\Service\ApiClient\Request;
 use Kamde\StackExtBundle\Service\ApiClient\Resource\AbstractResource;
-use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
+use Kamde\StackExtBundle\Service\ApiClient\StackResponseInterface;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class AbstractResourceTest extends \PHPUnit_Framework_TestCase
@@ -15,13 +15,13 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
     /** @var AbstractResource|mixed */
     protected $resource;
 
-    /** @var Connector|Mock */
+    /** @var StackConnector|Mock */
     protected $connectorMock;
 
     public function setUp()
     {
         $this->connectorMock = $this
-            ->getMockBuilder(Connector::class)
+            ->getMockBuilder(StackConnector::class)
             ->disableOriginalConstructor()
             ->getMock();
 

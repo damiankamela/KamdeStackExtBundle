@@ -3,15 +3,15 @@
 namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Connector;
 
 use GuzzleHttp\ClientInterface;
-use Kamde\StackExtBundle\Service\ApiClient\Connector\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector;
 use Kamde\StackExtBundle\Service\ApiClient\Request;
-use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
+use Kamde\StackExtBundle\Service\ApiClient\StackResponseInterface;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 use Psr\Http\Message\MessageInterface;
 
-class ConnectorTest extends \PHPUnit_Framework_TestCase
+class StackConnectorTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var Connector */
+    /** @var StackConnector */
     protected $connector;
 
     /** @var ClientInterface|Mock */
@@ -27,7 +27,7 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
 
         $this->clientMock->expects(self::any())->method('request')->willReturn($this->responseMock);
 
-        $this->connector = new Connector($this->clientMock, 'MySite.com');
+        $this->connector = new StackConnector($this->clientMock, 'MySite.com');
     }
 
     /**
@@ -65,7 +65,7 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
         $request = new Request($method, $uri, $input);
         $response = $this->connector->getResponse($request);
 
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(StackResponseInterface::class, $response);
         $this->assertEquals([['baz' => 'zoz']], $response->getItems());
         $this->assertEquals(100, $response->getQuotaMax());
         $this->assertEquals(99, $response->getQuotaRemaining());
@@ -108,7 +108,7 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
         $request = new Request($method, $uri, $input);
         $response = $this->connector->getResponse($request);
 
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(StackResponseInterface::class, $response);
         $this->assertEquals([['baz' => 'zoz']], $response->getItems());
         $this->assertEquals(100, $response->getQuotaMax());
         $this->assertEquals(99, $response->getQuotaRemaining());

@@ -2,14 +2,14 @@
 
 namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Resource;
 
-use Kamde\StackExtBundle\Service\ApiClient\Connector\Connector;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector;
 use Kamde\StackExtBundle\Service\ApiClient\Resource\ResourceFactory;
 use Kamde\StackExtBundle\Service\ApiClient\Resource\UserResource;
 use \PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ResourceFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var ResourceFactory */
+    /** @var ResourceFactory|mixed */
     protected $factory;
 
     public function setUp()
@@ -48,10 +48,10 @@ class ResourceFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Connector|Mock
+     * @return StackConnector|Mock
      */
     protected function getConnectorMock()
     {
-        return $this->getMockBuilder(Connector::class)->disableOriginalConstructor()->getMock();
+        return $this->getMockBuilder(StackConnector::class)->disableOriginalConstructor()->getMock();
     }
 }

@@ -4,14 +4,19 @@ namespace Kamde\StackExtBundle\Service\ApiClient\Connector;
 
 use GuzzleHttp\ClientInterface;
 use Kamde\StackExtBundle\Service\ApiClient\Request;
-use Kamde\StackExtBundle\Service\ApiClient\Response;
-use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
+use Kamde\StackExtBundle\Service\ApiClient\StackResponseInterface;
 use Psr\Http\Message\MessageInterface;
 
 abstract class AbstractConnector
 {
     /** @var ClientInterface|\GuzzleHttp\Client */
     protected $client;
+
+    /**
+     * @param array $responseBody
+     * @return mixed
+     */
+    abstract protected function buildResponse(array $responseBody);
 
     /**
      * @param ClientInterface $client
@@ -23,23 +28,22 @@ abstract class AbstractConnector
 
     /**
      * @param Request $request
-     * @return ResponseInterface
+     * @return StackResponseInterface
      */
     public function getResponse(Request $request)
     {
         $response = $this->client->request($request->getMethod(), $request->getUri(), $request->getParameters());
+        $responseBody = $this->getResponseBody($response);
 
-        return $this->buildResponse($response);
+        return $this->buildResponse($responseBody);
     }
 
     /**
      * @param MessageInterface $response
-     * @return Response
+     * @return mixed
      */
-    protected function buildResponse(MessageInterface $response)
+    protected function getResponseBody(MessageInterface $response)
     {
-        $body = \GuzzleHttp\json_decode($response->getBody(), true);
-
-        return new Response($body);
+        return \GuzzleHttp\json_decode($response->getBody(), true);
     }
 }

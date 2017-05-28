@@ -4,9 +4,10 @@ namespace Kamde\StackExtBundle\Service\ApiClient\Connector;
 
 use GuzzleHttp\ClientInterface;
 use Kamde\StackExtBundle\Service\ApiClient\Request;
-use Kamde\StackExtBundle\Service\ApiClient\ResponseInterface;
+use Kamde\StackExtBundle\Service\ApiClient\StackStackResponse;
+use Kamde\StackExtBundle\Service\ApiClient\StackResponseInterface;
 
-class Connector extends AbstractConnector
+class StackConnector extends AbstractConnector
 {
     /** @var string */
     protected $site;
@@ -24,12 +25,21 @@ class Connector extends AbstractConnector
 
     /**
      * @param Request $request
-     * @return ResponseInterface
+     * @return StackResponseInterface
      */
     public function getResponse(Request $request)
     {
         $request->setParameter('site', $this->site);
 
         return parent::getResponse($request);
+    }
+
+    /**
+     * @param array $responseBody
+     * @return StackStackResponse
+     */
+    protected function buildResponse(array $responseBody)
+    {
+        return new StackStackResponse($responseBody);
     }
 }
