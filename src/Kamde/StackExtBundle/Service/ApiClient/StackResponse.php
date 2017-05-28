@@ -2,7 +2,7 @@
 
 namespace Kamde\StackExtBundle\Service\ApiClient;
 
-class StackStackResponse implements StackResponseInterface
+class StackResponse implements StackResponseInterface
 {
     /** @var array */
     protected $items;
@@ -23,9 +23,9 @@ class StackStackResponse implements StackResponseInterface
     public function __construct(array $body)
     {
         $this->items = $body['items'] ?? null;
-        $this->hasMore = $body['hasMore'] ?? null;
-        $this->quotaMax = $body['quotaMax'] ?? null;
-        $this->quotaRemaining = $body['quotaRemaining'] ?? null;
+        $this->hasMore = $body['has_more'] ?? null;
+        $this->quotaMax = $body['quota_max'] ?? null;
+        $this->quotaRemaining = $body['quota_remaining'] ?? null;
     }
 
     /**

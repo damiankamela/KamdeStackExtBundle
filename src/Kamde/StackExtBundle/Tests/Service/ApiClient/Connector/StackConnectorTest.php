@@ -44,9 +44,9 @@ class StackConnectorTest extends \PHPUnit_Framework_TestCase
         ];
 
         $output = [
-            'quotaMax'       => 100,
-            'quotaRemaining' => 99,
-            'hasMore'        => false,
+            'quota_max'       => 100,
+            'quota_remaining' => 99,
+            'has_more'        => false,
             'items'          => [
                 ['baz' => 'zoz']
             ],
@@ -87,9 +87,9 @@ class StackConnectorTest extends \PHPUnit_Framework_TestCase
         ];
 
         $output = [
-            'quotaMax'       => 100,
-            'quotaRemaining' => 99,
-            'hasMore'        => false,
+            'quota_max'       => 100,
+            'quota_remaining' => 99,
+            'has_more'        => false,
             'items'          => [
                 ['baz' => 'zoz']
             ],
