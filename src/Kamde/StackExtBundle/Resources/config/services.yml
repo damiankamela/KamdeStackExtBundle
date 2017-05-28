@@ -1,6 +1,6 @@
 parameters:
-    api_url: https://api.stackexchange.com
-    api_version: 2.2
+    stack_api_url: https://api.stackexchange.com
+    stack_api_version: 2.2
 
 services:
     kamde_stack_ext.client_factory:
@@ -12,7 +12,7 @@ services:
         arguments:
             - []
             -
-              base_uri: '%api_url%/%api_version%'
+              base_uri: '%stack_api_url%/%stack_api_version%'
               headers:
                   User-Agent: 'Kamde StackExtBundle 0.1'
                   Accept: 'application/json'
