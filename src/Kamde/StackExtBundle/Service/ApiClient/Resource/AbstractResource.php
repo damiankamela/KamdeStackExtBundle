@@ -40,17 +40,17 @@ abstract class AbstractResource implements ResourceInterface
      */
     public function __call(string $name, array $arguments)
     {
-        if(false === strpos($name, 'get')) {
+        if (false === strpos($name, 'get')) {
             throw new MethodNotFoundException(sprintf('Method "%s not found in "%s" class.', $name, get_called_class()));
         }
 
-        if('getData' === $name) {
-            $resourceName = '';
+        if ('getData' === $name) {
+            $quota = '';
         } else {
-            $resourceName = $this->decamelize(str_replace('get', '', $name), '-');
+            $quota = $this->decamelize(str_replace('get', '', $name), '-');
         }
 
-        $uri = $this->generateUri() . $resourceName;
+        $uri = $this->generateUri($quota, $arguments);
         $request = new Request('GET', $uri);
 
         try {
@@ -88,11 +88,18 @@ abstract class AbstractResource implements ResourceInterface
     }
 
     /**
+     * @param string $resourceName
+     * @param array  $extraQuotas
      * @return string
      */
-    protected function generateUri()
+    protected function generateUri(string $resourceName, array $extraQuotas = [])
     {
-        return $this->decamelize($this->getResourceName(), '-') . '/' . $this->getId() . '/';
+        return implode('/', [
+            $this->decamelize($this->getResourceName(), '-'),
+            $this->getId(),
+            $resourceName,
+            implode('/', $extraQuotas)
+        ]);
     }
 
     /**

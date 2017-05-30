@@ -84,4 +84,20 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(['foo'], $response);
     }
+
+    /**
+     * @test
+     */
+    public function should_retrieve_resource_quota_with_arguments()
+    {
+        $this->connectorMock
+            ->expects(self::once())
+            ->method('getResponse')
+            ->with(new Request('GET', 's/1/foo/bar/baz'))
+            ->willReturn(['foo']);
+
+        $response = $this->resource->getFoo('bar', 'baz');
+
+        $this->assertEquals(['foo'], $response);
+    }
 }
