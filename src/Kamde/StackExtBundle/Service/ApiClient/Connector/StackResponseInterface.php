@@ -1,8 +1,8 @@
 <?php
 
-namespace Kamde\StackExtBundle\Service\ApiClient;
+namespace Kamde\StackExtBundle\Service\ApiClient\Connector;
 
-interface StackResponseInterface
+interface StackResponseInterface extends ResponseInterface
 {
     /**
      * @return array

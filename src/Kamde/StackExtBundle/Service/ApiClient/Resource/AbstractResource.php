@@ -5,8 +5,8 @@ namespace Kamde\StackExtBundle\Service\ApiClient\Resource;
 use GuzzleHttp\Exception\RequestException;
 use Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector;
 use Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException;
-use Kamde\StackExtBundle\Service\ApiClient\Request;
-use Kamde\StackExtBundle\Service\ApiClient\StackResponseInterface;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\Request;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\StackResponseInterface;
 use Kamde\StackExtBundle\Traits\ClassNameResolverTrait;
 
 /**

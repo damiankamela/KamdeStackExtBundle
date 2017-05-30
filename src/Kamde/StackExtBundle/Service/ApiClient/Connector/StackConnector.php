@@ -3,9 +3,6 @@
 namespace Kamde\StackExtBundle\Service\ApiClient\Connector;
 
 use GuzzleHttp\ClientInterface;
-use Kamde\StackExtBundle\Service\ApiClient\Request;
-use Kamde\StackExtBundle\Service\ApiClient\StackResponse;
-use Kamde\StackExtBundle\Service\ApiClient\StackResponseInterface;
 
 class StackConnector extends AbstractConnector
 {

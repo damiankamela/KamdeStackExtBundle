@@ -1,6 +1,6 @@
 <?php
 
-namespace Kamde\StackExtBundle\Service\ApiClient;
+namespace Kamde\StackExtBundle\Service\ApiClient\Connector;
 
 class StackResponse implements StackResponseInterface
 {

@@ -4,8 +4,8 @@ namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Connector;
 
 use GuzzleHttp\ClientInterface;
 use Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector;
-use Kamde\StackExtBundle\Service\ApiClient\Request;
-use Kamde\StackExtBundle\Service\ApiClient\StackResponseInterface;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\Request;
+use Kamde\StackExtBundle\Service\ApiClient\Connector\StackResponseInterface;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 use Psr\Http\Message\MessageInterface;
 

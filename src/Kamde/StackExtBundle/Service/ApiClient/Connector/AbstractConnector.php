@@ -3,8 +3,6 @@
 namespace Kamde\StackExtBundle\Service\ApiClient\Connector;
 
 use GuzzleHttp\ClientInterface;
-use Kamde\StackExtBundle\Service\ApiClient\Request;
-use Kamde\StackExtBundle\Service\ApiClient\StackResponseInterface;
 use Psr\Http\Message\MessageInterface;
 
 abstract class AbstractConnector
@@ -14,7 +12,7 @@ abstract class AbstractConnector
 
     /**
      * @param array $responseBody
-     * @return mixed
+     * @return ResponseInterface
      */
     abstract protected function buildResponse(array $responseBody);
 
@@ -28,7 +26,7 @@ abstract class AbstractConnector
 
     /**
      * @param Request $request
-     * @return StackResponseInterface
+     * @return ResponseInterface
      */
     public function getResponse(Request $request)
     {
