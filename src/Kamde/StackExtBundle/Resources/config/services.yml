@@ -27,5 +27,4 @@ services:
 
     kamde_stack_ext.resource_factory:
         class: Kamde\StackExtBundle\Service\ApiClient\Resource\ResourceFactory
-        arguments:
-            - '@kamde_stack_ext.connector.stackoverflow'
+        autowire: true
