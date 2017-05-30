@@ -21,7 +21,7 @@ class InvalidMethodCallException extends \Exception
         Throwable $previous = null
     ) {
         $message = sprintf(
-            'Method "%s(%s)" in "%s" class is invalid or has invalid arguments. Read class documentation.',
+            'Method "%s(%s)" in "%s" class is invalid or has invalid arguments. Read the resource documentation.',
             $method,
             implode(', ', $arguments),
             $class

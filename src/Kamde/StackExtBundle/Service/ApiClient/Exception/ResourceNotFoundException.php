@@ -14,7 +14,7 @@ class ResourceNotFoundException extends \Exception
      */
     public function __construct(string $resourceClass, $code = 0, Throwable $previous = null)
     {
-        $message = sprintf('The resource ("%s")you want to create is not found.', $resourceClass);
+        $message = sprintf('The resource ("%s") was not found.', $resourceClass);
 
         parent::__construct($message, $code, $previous);
     }
