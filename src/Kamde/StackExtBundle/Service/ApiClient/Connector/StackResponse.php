@@ -18,7 +18,6 @@ class StackResponse implements StackResponseInterface
 
     /**
      * @param array $body
-     *
      */
     public function __construct(array $body)
     {
