@@ -13,6 +13,9 @@ class Request
     /** @var array */
     protected $parameters;
 
+    /** @var string */
+    protected $baseUri;
+
     /**
      * @param string $method
      * @param string $uri
@@ -22,6 +25,7 @@ class Request
     {
         $this->method = $method;
         $this->uri = $uri;
+        $this->baseUri = $uri;
         $this->parameters = $parameters;
         $this->build();
     }
@@ -80,6 +84,7 @@ class Request
      */
     public function setParameters(array $parameters): self
     {
+        $this->uri = $this->baseUri;
         $this->parameters = $parameters;
         $this->build();
 
