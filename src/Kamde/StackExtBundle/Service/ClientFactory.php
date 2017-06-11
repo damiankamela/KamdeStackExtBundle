@@ -18,7 +18,7 @@ class ClientFactory
      *
      * @return ClientInterface
      */
-    public function create(array $middlewares = [], array $options = [], LoggerInterface $logger = null)
+    public function create(array $middlewares = [], array $options = [], LoggerInterface $logger = null): ClientInterface
     {
         $handler = HandlerStack::create();
 
@@ -39,7 +39,7 @@ class ClientFactory
      *
      * @return Client
      */
-    protected function createClient(HandlerStack $handler, array $options = [])
+    protected function createClient(HandlerStack $handler, array $options = []): Client
     {
         $options['handler'] = $handler;
 
