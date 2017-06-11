@@ -14,7 +14,7 @@ class ResourceNormalizerTest extends \PHPUnit_Framework_TestCase
         $normalizer = new ResourceNormalizer();
 
         $data = [
-            'property_1' => 'bar',
+            'property_1'      => 'bar',
             'second_property' => 'baz'
         ];
 
