@@ -1,13 +1,13 @@
 <?php
 
-namespace Kamde\StackExtBundle\Service\ApiClient\Resource;
+namespace Kamde\StackExtBundle\Service\Resource;
 
 use GuzzleHttp\Exception\RequestException;
-use Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector;
-use Kamde\StackExtBundle\Service\ApiClient\Exception\InvalidMethodCallException;
-use Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException;
-use Kamde\StackExtBundle\Service\ApiClient\Connector\Request;
-use Kamde\StackExtBundle\Service\ApiClient\Connector\StackResponseInterface;
+use Kamde\StackExtBundle\Service\Connector\StackConnector;
+use Kamde\StackExtBundle\Service\Exception\InvalidMethodCallException;
+use Kamde\StackExtBundle\Service\Exception\MethodNotFoundException;
+use Kamde\StackExtBundle\Service\Connector\Request;
+use Kamde\StackExtBundle\Service\Connector\StackResponseInterface;
 use Kamde\StackExtBundle\Traits\ClassNameResolverTrait;
 
 /**

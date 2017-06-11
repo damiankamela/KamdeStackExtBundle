@@ -1,10 +1,10 @@
 <?php
 
-namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Resource;
+namespace Kamde\StackExtBundle\Tests\Service\Resource;
 
-use Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector;
-use Kamde\StackExtBundle\Service\ApiClient\Resource\ResourceFactory;
-use Kamde\StackExtBundle\Service\ApiClient\Resource\UserResource;
+use Kamde\StackExtBundle\Service\Connector\StackConnector;
+use Kamde\StackExtBundle\Service\Resource\ResourceFactory;
+use Kamde\StackExtBundle\Service\Resource\UserResource;
 use \PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ResourceFactoryTest extends \PHPUnit_Framework_TestCase
@@ -31,7 +31,7 @@ class ResourceFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Kamde\StackExtBundle\Service\ApiClient\Exception\ResourceNotFoundException
+     * @expectedException \Kamde\StackExtBundle\Service\Exception\ResourceNotFoundException
      */
     public function trying_create_unknown_resource()
     {
@@ -40,7 +40,7 @@ class ResourceFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException
+     * @expectedException \Kamde\StackExtBundle\Service\Exception\MethodNotFoundException
      */
     public function trying_call_undefined_method()
     {

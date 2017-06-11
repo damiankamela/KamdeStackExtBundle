@@ -1,10 +1,10 @@
 <?php
 
-namespace Kamde\StackExtBundle\Service\ApiClient\Resource;
+namespace Kamde\StackExtBundle\Service\Resource;
 
-use Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector;
-use Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException;
-use Kamde\StackExtBundle\Service\ApiClient\Exception\ResourceNotFoundException;
+use Kamde\StackExtBundle\Service\Connector\StackConnector;
+use Kamde\StackExtBundle\Service\Exception\MethodNotFoundException;
+use Kamde\StackExtBundle\Service\Exception\ResourceNotFoundException;
 
 /**
  * @method UserResource createUserResource(int $id)

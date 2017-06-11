@@ -1,6 +1,6 @@
 <?php
 
-namespace Kamde\StackExtBundle\Service\ApiClient\Connector;
+namespace Kamde\StackExtBundle\Service\Connector;
 
 class Request
 {

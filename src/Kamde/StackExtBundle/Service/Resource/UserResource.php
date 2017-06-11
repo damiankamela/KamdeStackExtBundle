@@ -1,6 +1,6 @@
 <?php
 
-namespace Kamde\StackExtBundle\Service\ApiClient\Resource;
+namespace Kamde\StackExtBundle\Service\Resource;
 
 /**
  * @method array getAnswers()

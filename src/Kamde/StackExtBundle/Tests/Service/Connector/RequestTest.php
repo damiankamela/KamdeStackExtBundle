@@ -1,8 +1,8 @@
 <?php
 
-namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Connector;
+namespace Kamde\StackExtBundle\Tests\Service\Connector;
 
-use Kamde\StackExtBundle\Service\ApiClient\Connector\Request;
+use Kamde\StackExtBundle\Service\Connector\Request;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {

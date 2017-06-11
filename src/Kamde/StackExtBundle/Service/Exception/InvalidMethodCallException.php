@@ -1,6 +1,6 @@
 <?php
 
-namespace Kamde\StackExtBundle\Service\ApiClient\Exception;
+namespace Kamde\StackExtBundle\Service\Exception;
 
 use Throwable;
 

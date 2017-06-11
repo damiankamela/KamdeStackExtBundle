@@ -1,16 +1,17 @@
 <?php
 
-namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Connector;
+namespace Kamde\StackExtBundle\Tests\Service\Connector;
 
 use GuzzleHttp\ClientInterface;
-use Kamde\StackExtBundle\Service\ApiClient\Connector\AbstractConnector;
-use Kamde\StackExtBundle\Service\ApiClient\Connector\Request;
+use Kamde\StackExtBundle\Service\Connector\StackConnector;
+use Kamde\StackExtBundle\Service\Connector\Request;
+use Kamde\StackExtBundle\Service\Connector\StackResponseInterface;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 use Psr\Http\Message\MessageInterface;
 
-class AbstractConnectorTest extends \PHPUnit_Framework_TestCase
+class StackConnectorTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var AbstractConnector|Mock */
+    /** @var StackConnector */
     protected $connector;
 
     /** @var ClientInterface|Mock */
@@ -26,10 +27,7 @@ class AbstractConnectorTest extends \PHPUnit_Framework_TestCase
 
         $this->clientMock->expects(self::any())->method('request')->willReturn($this->responseMock);
 
-        $this->connector = $this
-            ->getMockBuilder(AbstractConnector::class)
-            ->setConstructorArgs([$this->clientMock])
-            ->getMockForAbstractClass();
+        $this->connector = new StackConnector($this->clientMock, 'MySite.com');
     }
 
     /**
@@ -46,9 +44,9 @@ class AbstractConnectorTest extends \PHPUnit_Framework_TestCase
         ];
 
         $output = [
-            'quotaMax'       => 100,
-            'quotaRemaining' => 99,
-            'hasMore'        => false,
+            'quota_max'       => 100,
+            'quota_remaining' => 99,
+            'has_more'        => false,
             'items'          => [
                 ['baz' => 'zoz']
             ],
@@ -57,19 +55,21 @@ class AbstractConnectorTest extends \PHPUnit_Framework_TestCase
         $this->clientMock
             ->expects(self::once())
             ->method('request')
-            ->with($method, $uri . '?foo=1&bar=baz', []);
+            ->with($method, $uri . '?foo=1&bar=baz&site=MySite.com', []);
 
         $this->responseMock
             ->expects(self::once())
             ->method('getBody')
             ->willReturn(json_encode($output));
 
-        $this->connector->expects(self::once())->method('buildResponse')->willReturn(['foo']);
-
         $request = new Request($method, $uri, $input);
         $response = $this->connector->getResponse($request);
 
-        $this->assertEquals(['foo'], $response);
+        $this->assertInstanceOf(StackResponseInterface::class, $response);
+        $this->assertEquals([['baz' => 'zoz']], $response->getItems());
+        $this->assertEquals(100, $response->getQuotaMax());
+        $this->assertEquals(99, $response->getQuotaRemaining());
+        $this->assertfalse($response->hasMore());
     }
 
     /**
@@ -87,9 +87,9 @@ class AbstractConnectorTest extends \PHPUnit_Framework_TestCase
         ];
 
         $output = [
-            'quotaMax'       => 100,
-            'quotaRemaining' => 99,
-            'hasMore'        => false,
+            'quota_max'       => 100,
+            'quota_remaining' => 99,
+            'has_more'        => false,
             'items'          => [
                 ['baz' => 'zoz']
             ],
@@ -98,19 +98,21 @@ class AbstractConnectorTest extends \PHPUnit_Framework_TestCase
         $this->clientMock
             ->expects(self::once())
             ->method('request')
-            ->with($method, $uri, $input);
+            ->with($method, $uri, array_merge($input, ['site' => 'MySite.com']));
 
         $this->responseMock
             ->expects(self::once())
             ->method('getBody')
             ->willReturn(json_encode($output));
 
-        $this->connector->expects(self::once())->method('buildResponse')->willReturn(['foo']);
-
         $request = new Request($method, $uri, $input);
         $response = $this->connector->getResponse($request);
 
-        $this->assertEquals(['foo'], $response);
+        $this->assertInstanceOf(StackResponseInterface::class, $response);
+        $this->assertEquals([['baz' => 'zoz']], $response->getItems());
+        $this->assertEquals(100, $response->getQuotaMax());
+        $this->assertEquals(99, $response->getQuotaRemaining());
+        $this->assertfalse($response->hasMore());
     }
 
     public function provideMethod()

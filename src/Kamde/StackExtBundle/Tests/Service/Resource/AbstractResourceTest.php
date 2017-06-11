@@ -1,12 +1,12 @@
 <?php
 
-namespace Kamde\StackExtBundle\Tests\Service\ApiClient\Resource;
+namespace Kamde\StackExtBundle\Tests\Service\Resource;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
-use Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector;
-use Kamde\StackExtBundle\Service\ApiClient\Connector\Request;
-use Kamde\StackExtBundle\Service\ApiClient\Resource\AbstractResource;
+use Kamde\StackExtBundle\Service\Connector\StackConnector;
+use Kamde\StackExtBundle\Service\Connector\Request;
+use Kamde\StackExtBundle\Service\Resource\AbstractResource;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class AbstractResourceTest extends \PHPUnit_Framework_TestCase
@@ -35,7 +35,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException
+     * @expectedException \Kamde\StackExtBundle\Service\Exception\MethodNotFoundException
      */
     public function calling_invalid_method_should_throw_error()
     {
@@ -44,7 +44,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Kamde\StackExtBundle\Service\ApiClient\Exception\InvalidMethodCallException
+     * @expectedException \Kamde\StackExtBundle\Service\Exception\InvalidMethodCallException
      */
     public function calling_unavailable_resource_should_throw_error()
     {
