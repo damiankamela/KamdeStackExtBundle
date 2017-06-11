@@ -2,8 +2,10 @@
 
 namespace Kamde\StackExtBundle\Service\Resource;
 
+use Kamde\StackExtBundle\Service\Connector\StackResponseInterface;
+
 /**
- * @method array getData()
+ * @method StackResponseInterface getData()
  */
 interface ResourceInterface
 {

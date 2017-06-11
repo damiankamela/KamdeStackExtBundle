@@ -11,7 +11,7 @@ use Kamde\StackExtBundle\Service\Connector\StackResponseInterface;
 use Kamde\StackExtBundle\Traits\ClassNameResolverTrait;
 
 /**
- * @method array getData()
+ * @method StackResponseInterface getData()
  */
 abstract class AbstractResource implements ResourceInterface
 {
