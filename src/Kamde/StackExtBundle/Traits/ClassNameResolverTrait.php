@@ -5,11 +5,12 @@ namespace Kamde\StackExtBundle\Traits;
 trait ClassNameResolverTrait
 {
     /**
+     * @param string|null $className
      * @return string
      */
-    protected function getShortClassName(): string
+    protected function getShortClassName(string $className = null): string
     {
-        return substr(strrchr(get_called_class(), "\\"), 1);
+        return substr(strrchr($className ?? get_called_class(), "\\"), 1);
     }
 
     /**
