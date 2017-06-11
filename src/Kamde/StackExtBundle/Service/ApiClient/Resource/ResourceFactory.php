@@ -32,7 +32,7 @@ class ResourceFactory
     public function __call(string $name, array $arguments)
     {
         if (false === strpos($name, 'create')) {
-            throw new MethodNotFoundException(sprintf('Method "%s not found in "%s" class.', $name, get_called_class()));
+            throw new MethodNotFoundException($name, get_called_class());
         }
 
         $resourceClass = __NAMESPACE__ . '\\' . str_replace('create', '', $name);
