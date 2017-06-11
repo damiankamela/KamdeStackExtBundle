@@ -13,8 +13,8 @@ class ClientFactory
 {
     /**
      * @param MiddlewareInterface[] $middlewares
-     * @param array                $options
-     * @param LoggerInterface|null $logger
+     * @param array                 $options
+     * @param LoggerInterface|null  $logger
      *
      * @return ClientInterface
      */
