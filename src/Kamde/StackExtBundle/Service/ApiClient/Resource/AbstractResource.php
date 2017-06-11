@@ -96,12 +96,17 @@ abstract class AbstractResource implements ResourceInterface
      */
     protected function generateUri(string $resourceName, array $extraQuotas = [])
     {
-        return implode('/', [
+        $parts = [
             $this->decamelize($this->getResourceName(), '-'),
             $this->getId(),
-            $resourceName,
-            implode('/', $extraQuotas)
-        ]);
+            $resourceName
+        ];
+
+        if(!empty($extraQuotas)) {
+            $parts = array_merge($parts, $extraQuotas);
+        }
+
+        return implode('/', $parts);
     }
 
     /**

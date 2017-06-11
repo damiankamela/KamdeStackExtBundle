@@ -11,7 +11,7 @@ use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class AbstractResourceTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var AbstractResource|mixed */
+    /** @var AbstractResource|Mock|mixed */
     protected $resource;
 
     /** @var StackConnector|Mock */
@@ -27,7 +27,10 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
         $this->resource = $this
             ->getMockBuilder(AbstractResource::class)
             ->setConstructorArgs([$this->connectorMock, 1])
+            ->setMethods(['getResourceName'])
             ->getMockForAbstractClass();
+
+        $this->resource->expects(self::any())->method('getResourceName')->willReturn('Users');
     }
 
     /**
@@ -41,7 +44,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Kamde\StackExtBundle\Service\ApiClient\Exception\MethodNotFoundException
+     * @expectedException \Kamde\StackExtBundle\Service\ApiClient\Exception\InvalidMethodCallException
      */
     public function calling_unavailable_resource_should_throw_error()
     {
@@ -61,7 +64,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
         $this->connectorMock
             ->expects(self::once())
             ->method('getResponse')
-            ->with(new Request('GET', 's/1/foo-bar'))
+            ->with(new Request('GET', 'users/1/foo-bar'))
             ->willReturn(['foo']);
 
         $response = $this->resource->getFooBar();
@@ -77,7 +80,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
         $this->connectorMock
             ->expects(self::once())
             ->method('getResponse')
-            ->with(new Request('GET', 's/1/'))
+            ->with(new Request('GET', 'users/1/'))
             ->willReturn(['foo']);
 
         $response = $this->resource->getData();
@@ -93,7 +96,7 @@ class AbstractResourceTest extends \PHPUnit_Framework_TestCase
         $this->connectorMock
             ->expects(self::once())
             ->method('getResponse')
-            ->with(new Request('GET', 's/1/foo/bar/baz'))
+            ->with(new Request('GET', 'users/1/foo/bar/baz'))
             ->willReturn(['foo']);
 
         $response = $this->resource->getFoo('bar', 'baz');
