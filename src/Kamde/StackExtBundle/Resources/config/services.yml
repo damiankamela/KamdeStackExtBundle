@@ -4,7 +4,7 @@ parameters:
 
 services:
     kamde_stack_ext.client_factory:
-        class: Kamde\StackExtBundle\Service\ApiClient\ClientFactory
+        class: Kamde\StackExtBundle\Service\ClientFactory
 
     kamde_stack_ext.stack_client:
         class: GuzzleHttp\Client
@@ -20,11 +20,11 @@ services:
             - ~
 
     kamde_stack_ext.connector.stackoverflow:
-        class: Kamde\StackExtBundle\Service\ApiClient\Connector\StackConnector
+        class: Kamde\StackExtBundle\Service\Connector\StackConnector
         arguments:
             - '@kamde_stack_ext.stack_client'
             - 'stackoverflow'
 
     kamde_stack_ext.resource_factory:
-        class: Kamde\StackExtBundle\Service\ApiClient\Resource\ResourceFactory
+        class: Kamde\StackExtBundle\Service\Resource\ResourceFactory
         autowire: true
