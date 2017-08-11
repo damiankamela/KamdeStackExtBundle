@@ -24,4 +24,20 @@ class ResourceNormalizer
 
         return $serializer->denormalize($data, $modelClass);
     }
+
+    /**
+     * @param string $modelClass
+     * @param array  $collection
+     * @return object[]
+     */
+    public function normalizeCollection(string $modelClass, array $collection)
+    {
+        $results = [];
+
+        foreach ($collection as $item) {
+            $results[] = $this->normalize($modelClass, $item);
+        }
+
+        return $results;
+    }
 }
